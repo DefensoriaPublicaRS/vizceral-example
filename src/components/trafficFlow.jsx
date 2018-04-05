@@ -150,9 +150,9 @@ class TrafficFlow extends React.Component {
     this.setState({ currentView: currentView, objectToHighlight: parsedQuery.highlighted });
   }
 
-  beginSampleData () {
+  dataUpdateLoop() {
     this.traffic = { nodes: [], connections: [] };
-    request.get('sample_data.json')
+    request.get('data')
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (res && res.status === 200) {
@@ -160,11 +160,14 @@ class TrafficFlow extends React.Component {
           this.updateData(res.body);
         }
       });
+      setTimeout(function() {
+        this.dataUpdateLoop();
+      }.bind(this), 5000);
   }
 
   componentDidMount () {
     this.checkInitialRoute();
-    this.beginSampleData();
+    this.dataUpdateLoop();
 
     // Listen for changes to the stores
     filterStore.addChangeListener(this.filtersChanged);
