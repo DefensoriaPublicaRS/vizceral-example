@@ -370,3 +370,8 @@ a.accordion-toggle {
   top: -1px;
   right: -5px;
 }
+
+.vizceral .vizceral-notice{
+    width: initial !important;
+    min-width: 200px !important;
+}
